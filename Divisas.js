@@ -1,28 +1,96 @@
-var ctx = document.getElementById('grafico').getContext('2d');
+document.addEventListener('DOMContentLoaded', function() {
+  const indicatorSelect = document.getElementById('indicatorSelect');
+  const indicatorInfo = document.getElementById('indicatorInfo');
+  const indicatorChart = document.getElementById('indicatorChart').getContext('2d');
+  let chart;
 
-
-fetch('https://mindicador.cl/api/{tipo_indicador}/{dd-mm-yyyy}')
-  .then(response => response.json())
-  .then(data => {
-    // Procesar los datos recibidos de la API y extraer la información necesaria
-    var years = data.years;
-    var prices = data.prices;
-
-    // Configurar y dibujar el gráfico
-    var chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: years,
-        datasets: [{
-          label: 'Precios',
-          data: prices,
-          borderColor: 'blue',
-          backgroundColor: 'transparent'
-        }]
-      },
-      options: {}
+  // Obtener los tipos de indicadores disponibles
+  axios.get('https://mindicador.cl/api')
+    .then(function(response) {
+      const indicators = response.data;
+      for (const key in indicators) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = indicators[key].nombre;
+        indicatorSelect.appendChild(option);
+      }
+    })
+    .catch(function(error) {
+      console.log(error);
     });
-  })
-  .catch(error => {
-    console.error('Error al obtener los datos de la API', error);
+
+  // Obtener la información del indicador seleccionado
+  indicatorSelect.addEventListener('change', function() {
+    const selectedIndicator = indicatorSelect.value;
+    axios.get(`https://mindicador.cl/api/${selectedIndicator}`)
+      .then(function(response) {
+        const indicatorData = response.data;
+        const latestData = indicatorData.serie[0];
+
+        const html = `
+          <h3>${indicatorData.nombre}</h3>
+          <p>Valor: ${latestData.valor}</p>
+          <p>Fecha: ${latestData.fecha}</p>
+          <p>Unidad de medida: ${indicatorData.unidad_medida}</p>
+        `;
+        indicatorInfo.innerHTML = html;
+
+        const dates = [];
+        const values = [];
+        for (const data of indicatorData.serie) {
+          dates.push(data.fecha);
+          values.push(data.valor);
+        }
+
+        if (chart) {
+          chart.destroy();
+        }
+
+        chart = new Chart(indicatorChart, {
+          type: 'line',
+          data: {
+            labels: dates,
+            datasets: [{
+              label: indicatorData.nombre,
+              data: values,
+              backgroundColor: 'rgba(0, 123, 255, 0.3)',
+              borderColor: 'rgba(0, 123, 255, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                display: true,
+                grid: {
+                  display: false
+                },
+                ticks: {
+                  autoSkip: true,
+                  maxTicksLimit: 10
+                }
+              },
+              y: {
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              legend: {
+                display: true,
+                labels: {
+                  font: {
+                    size: 14
+                  }
+                }
+              }
+            }
+          }
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   });
+});
