@@ -22,14 +22,12 @@
   
   /* Estilos para el contenedor del gráfico */
   #chartContainer {
-    max-width: 800px;
+    max-width: 500px;
     margin: 0 auto;
   }
   
   /* Estilos para el gráfico */
   #indicatorChart {
-    height: 600px;
-    max-height: 400px;
-    margin-bottom: 20px;
+    height: 300px;
   }
   
