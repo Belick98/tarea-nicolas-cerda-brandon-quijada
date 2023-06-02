@@ -1,23 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divisas</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="java.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indicadores Económicos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  
 </head>
 <body>
-    <div id="menu"></div>
-    <div id="slices">
-
-     
+  <div class="container">
+    <h1 class="text-center mt-4">Indicadores Económicos</h1>
+    <div class="form-group">
+      <label for="indicatorSelect">Seleccione un indicador:</label>
+      <select id="indicatorSelect" class="form-control"></select>
     </div>
-    <div id="cuerpo">
-        <canvas id="grafico"></canvas>
+    <div id="indicatorInfo" class="mt-4"></div>
+    <div class="text-center">
+      <div id="chartContainer">
+        <canvas id="indicatorChart"></canvas>
+      </div>
     </div>
-    <div id="contenedor"></div>
-    <div id="footer"></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="java.js"></script>
 </body>
 </html>
