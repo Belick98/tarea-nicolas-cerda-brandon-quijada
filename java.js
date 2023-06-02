@@ -65,15 +65,29 @@ document.addEventListener('DOMContentLoaded', function() {
               x: {
                 display: true,
                 grid: {
-                  display: false
+                  color: 'rgba(0, 0, 0, 0.1)', // Color de la línea de las coordenadas x
+                  borderColor: 'rgba(0, 0, 0, 0.1)' // Color del borde de las coordenadas x
                 },
                 ticks: {
                   autoSkip: true,
-                  maxTicksLimit: 10
+                  maxTicksLimit: 10,
+                  color: 'rgba(0, 0, 0, 0.5)', // Color de las coordenadas x
+                  font: {
+                    size: 12
+                  }
                 }
               },
               y: {
-                beginAtZero: true
+                beginAtZero: true,
+                grid: {
+                  color: 'rgba(0, 0, 0, 0.1)' // Color de las coordenadas y
+                },
+                ticks: {
+                  color: 'rgba(0, 0, 0, 0.5)', // Color de las coordenadas y
+                  font: {
+                    size: 12
+                  }
+                }
               }
             },
             plugins: {
