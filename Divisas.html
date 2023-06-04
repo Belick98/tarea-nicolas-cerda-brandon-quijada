@@ -1,29 +1,69 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Indicadores Económicos</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
-  
+  <title>Divisas</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    th {
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
   <div class="container">
-    <h1 class="text-center mt-4">Indicadores Económicos</h1>
+    <h1>Consulta de Divisas</h1>
+
     <div class="form-group">
-      <label for="indicatorSelect">Seleccione un indicador:</label>
-      <select id="indicatorSelect" class="form-control"></select>
+      <label for="currency">Moneda:</label>
+      <select id="currency" class="form-control">
+        <!-- Opciones de monedas -->
+      </select>
     </div>
-    <div id="indicatorInfo" class="mt-4"></div>
-    <div class="text-center">
-      <div id="chartContainer">
-        <canvas id="indicatorChart"></canvas>
-      </div>
+
+    <div class="form-group">
+      <label for="year">Año:</label>
+      <select id="year" class="form-control">
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Fecha:</label>
+      <input type="date" id="date" class="form-control">
+    </div>
+
+    <button id="search-btn" class="btn btn-primary">Buscar</button>
+
+    <div class="mt-4">
+      <canvas id="chart"></canvas>
+    </div>
+
+    <div class="mt-4">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Moneda</th>
+            <th>Valor</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+      </table>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="java.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <script src="main.js"></script>
 </body>
+
 </html>
